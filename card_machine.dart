@@ -2,8 +2,14 @@ import 'card.dart';
 import 'exceptions.dart';
 import 'transaction.dart';
 
+// TODO : validasi amount
+// TODO : validasi nomor kartu
+// TODO : validasi nomor rekening
+
 abstract class CardMachine {
   Type get loggedInCardType;
+
+  List<Transaction> getAccountMutation();
 
   void seeCardInformation();
 
@@ -14,28 +20,25 @@ abstract class CardMachine {
 
   void logout();
 
-  void transfer({
-    required String receiverAccountNumber,
-    required double amount,
-  });
+  void checkOut(double amount);
+
+  // hanya atm
 
   void withDraw(double amount);
 
   void deposit(double amount);
 
+  void transfer({
+    required String receiverAccountNumber,
+    required double amount,
+  });
+
   void topUpEmoney({
     required String receiverCardNumber,
     required double amount,
   });
-
-  List<Transaction> getAccountMutation();
-
-  void checkOut({
-    required double amount,
-  });
 }
 
-// TODO : validasi amount
 class CardMachineImpl extends CardMachine {
   // index kartu yang sedang bertransaksi
   // -1 berarti tidak ada kartu yang sedang bertransaksi
@@ -49,18 +52,21 @@ class CardMachineImpl extends CardMachine {
 
   CardMachineImpl({required List<Card> cards}) : _cards = cards;
 
-  @override
-  void login({required String cardNumber, required String pin}) {
-    // mencari nomor kartu di list kartu
-    int cardIndex = mustRegisteredCardNumber(cardNumber);
+  void mustAuthenticated() {
+    if (_cardIndex < 0) {
+      throw BelumLoginException();
+    }
+  }
 
-    // mengecek apakah nomor kartu dan pin sesuai
-    bool isCorrectPin = _cards[cardIndex].pin == pin;
-    if (isCorrectPin) {
-      // mengganti index kartu yang sedang bertransaksi
-      _cardIndex = cardIndex;
-    } else {
-      throw SalahPinException();
+  void mustEnoughBalance(double amount) {
+    if (amount > _cards[_cardIndex].balance) {
+      throw SaldoKurangException();
+    }
+  }
+
+  void mustATM() {
+    if (_cards[_cardIndex] is! ATM) {
+      throw TransaksiDilarangException();
     }
   }
 
@@ -106,7 +112,49 @@ class CardMachineImpl extends CardMachine {
   }
 
   @override
-  void checkOut({required double amount}) {
+  Type get loggedInCardType {
+    // memastikan sudah login
+    mustAuthenticated();
+
+    return _cards[_cardIndex].runtimeType;
+  }
+
+  @override
+  List<Transaction> getAccountMutation() {
+    // memastikan sudah login
+    mustAuthenticated();
+
+    // mencari transaksi berdasarkan nomor kartu
+    return _transactions
+        .where(
+          (element) => element.cardNumber == _cards[_cardIndex].cardNumber,
+        )
+        .toList();
+  }
+
+  @override
+  void login({required String cardNumber, required String pin}) {
+    // mencari nomor kartu di list kartu
+    int cardIndex = mustRegisteredCardNumber(cardNumber);
+
+    // mengecek apakah nomor kartu dan pin sesuai
+    bool isCorrectPin = _cards[cardIndex].pin == pin;
+    if (isCorrectPin) {
+      // mengganti index kartu yang sedang bertransaksi
+      _cardIndex = cardIndex;
+    } else {
+      throw SalahPinException();
+    }
+  }
+
+  @override
+  void logout() {
+    // set card index = -1
+    _cardIndex = -1;
+  }
+
+  @override
+  void checkOut(double amount) {
     // memastikan sudah login
     mustAuthenticated();
 
@@ -122,6 +170,58 @@ class CardMachineImpl extends CardMachine {
         cardNumber: _cards[_cardIndex].cardNumber,
         amount: amount,
         balance: _cards[_cardIndex].balance - amount,
+      ),
+    );
+  }
+
+  @override
+  void seeCardInformation() {
+    // memastikan sudah login
+    mustAuthenticated();
+
+    // menampilkan informasi kartu sesuai jenisnya
+    final card = _cards[_cardIndex];
+    if (card is ATM) {
+      print("Informasi Kartu");
+      print("-----------------------");
+      print("Jenis kartu           : ATM");
+      print("Nomor kartu           : ${card.cardNumber}");
+      print("Nomor Rekening        : ${card.accountNumber}");
+      print("Cabang bank           : ${card.bankBranch}");
+      print("Nama pemilik rekening : ${card.name}");
+      print("Sisal saldo           : ${card.balance}");
+    } else if (card is EMoney) {
+      print("Informasi Kartu");
+      print("-----------------------");
+      print("Jenis kartu           : E-Money");
+      print("Nomor kartu           : ${card.cardNumber}");
+      print("Sisa Saldo            : ${card.balance}");
+    }
+  }
+
+  // must atm
+
+  @override
+  void withDraw(double amount) {
+    // memastikan sudah login
+    mustAuthenticated();
+
+    // memastikan jenis kartu adalah atm
+    mustATM();
+
+    // memastikan saldo kartu cukup
+    mustEnoughBalance(amount);
+
+    // mengurang saldo
+    double balance = _cards[_cardIndex].balance - amount;
+    _cards[_cardIndex].setBalance = balance;
+
+    // mencatat transaksi withdraw
+    _transactions.add(
+      WithDrawTransaction(
+        cardNumber: _cards[_cardIndex].cardNumber,
+        amount: amount,
+        balance: balance,
       ),
     );
   }
@@ -145,19 +245,6 @@ class CardMachineImpl extends CardMachine {
         balance: _cards[_cardIndex].balance + amount,
       ),
     );
-  }
-
-  @override
-  List<Transaction> getAccountMutation() {
-    // memastikan sudah login
-    mustAuthenticated();
-
-    // mencari transaksi berdasarkan nomor kartu
-    return _transactions
-        .where(
-          (element) => element.cardNumber == _cards[_cardIndex].cardNumber,
-        )
-        .toList();
   }
 
   @override
@@ -262,87 +349,5 @@ class CardMachineImpl extends CardMachine {
         ),
       );
     }
-  }
-
-  @override
-  void withDraw(double amount) {
-    // memastikan sudah login
-    mustAuthenticated();
-
-    // memastikan jenis kartu adalah atm
-    mustATM();
-
-    // memastikan saldo kartu cukup
-    mustEnoughBalance(amount);
-
-    // mengurang saldo
-    double balance = _cards[_cardIndex].balance - amount;
-    _cards[_cardIndex].setBalance = balance;
-
-    // mencatat transaksi withdraw
-    _transactions.add(
-      WithDrawTransaction(
-        cardNumber: _cards[_cardIndex].cardNumber,
-        amount: amount,
-        balance: balance,
-      ),
-    );
-  }
-
-  void mustEnoughBalance(double amount) {
-    if (amount > _cards[_cardIndex].balance) {
-      throw SaldoKurangException();
-    }
-  }
-
-  void mustATM() {
-    if (_cards[_cardIndex] is! ATM) {
-      throw TransaksiDilarangException();
-    }
-  }
-
-  void mustAuthenticated() {
-    if (_cardIndex < 0) {
-      throw BelumLoginException();
-    }
-  }
-
-  @override
-  void logout() {
-    // set card index = -1
-    _cardIndex = -1;
-  }
-
-  @override
-  void seeCardInformation() {
-    // memastikan sudah login
-    mustAuthenticated();
-
-    // menampilkan informasi kartu sesuai jenisnya
-    final card = _cards[_cardIndex];
-    if (card is ATM) {
-      print("Informasi Kartu");
-      print("-----------------------");
-      print("Jenis kartu           : ATM");
-      print("Nomor kartu           : ${card.cardNumber}");
-      print("Nomor Rekening        : ${card.accountNumber}");
-      print("Cabang bank           : ${card.bankBranch}");
-      print("Nama pemilik rekening : ${card.name}");
-      print("Sisal saldo           : ${card.balance}");
-    } else if (card is EMoney) {
-      print("Informasi Kartu");
-      print("-----------------------");
-      print("Jenis kartu           : E-Money");
-      print("Nomor kartu           : ${card.cardNumber}");
-      print("Sisa Saldo            : ${card.balance}");
-    }
-  }
-
-  @override
-  Type get loggedInCardType {
-    // memastikan sudah login
-    mustAuthenticated();
-
-    return _cards[_cardIndex].runtimeType;
   }
 }
