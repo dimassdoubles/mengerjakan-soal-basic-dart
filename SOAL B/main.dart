@@ -21,7 +21,7 @@ void main() {
 }
 
 void transactionProcess(CardMachine cardMachine) {
-  switch (cardMachine.loggedInCardType) {
+  switch (cardMachine.insertedCardType) {
     case ATM:
       {
         // menampilkan menu

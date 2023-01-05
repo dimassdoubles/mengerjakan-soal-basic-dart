@@ -4,7 +4,7 @@ import 'transaction.dart';
 import 'validator.dart';
 
 abstract class CardMachine {
-  Type get loggedInCardType;
+  Type get insertedCardType;
 
   List<Transaction> getAccountMutation();
 
@@ -141,7 +141,7 @@ class CardMachineImpl extends CardMachine {
   }
 
   @override
-  Type get loggedInCardType {
+  Type get insertedCardType {
     // memastikan sudah di otentikasi
     mustAuthenticated();
 
