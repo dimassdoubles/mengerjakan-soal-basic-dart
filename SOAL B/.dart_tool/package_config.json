@@ -56,6 +56,12 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "equatable",
+      "rootUri": "file:///home/sts/.pub-cache/hosted/pub.dev/equatable-2.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "file",
       "rootUri": "file:///home/sts/.pub-cache/hosted/pub.dev/file-6.1.4",
       "packageUri": "lib/",
@@ -278,13 +284,13 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "temu_cari",
+      "name": "atm",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-01-05T10:09:12.086958Z",
+  "generated": "2023-01-06T01:56:53.509483Z",
   "generator": "pub",
   "generatorVersion": "3.0.0-77.0.dev"
 }

@@ -19,3 +19,5 @@ class PinTidakValidException implements Exception {}
 class KartuBelumDimasukkanException implements Exception {}
 
 class NominalTidakValidException implements Exception{}
+
+class MesinAtmSedangDigunakanException implements Exception{}

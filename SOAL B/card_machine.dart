@@ -1,4 +1,5 @@
 import 'card.dart';
+import 'card_information.dart';
 import 'exceptions.dart';
 import 'transaction.dart';
 import 'validator.dart';
@@ -8,7 +9,7 @@ abstract class CardMachine {
 
   List<Transaction> getAccountMutation();
 
-  void seeCardInformation();
+  CardInformation? getCardInformation();
 
   void insertCard(String cardNumber);
 
@@ -163,6 +164,11 @@ class CardMachineImpl extends CardMachine {
 
   @override
   void insertCard(String cardNumber) {
+    // memastikan tidak ada kartu yang ada di dalam mesin
+    if (_cardIndex != -1) {
+      throw MesinAtmSedangDigunakanException();
+    }
+
     // memastikan nomor kartu valid
     mustValidCardNumber(cardNumber);
 
@@ -209,28 +215,27 @@ class CardMachineImpl extends CardMachine {
   }
 
   @override
-  void seeCardInformation() {
+  CardInformation? getCardInformation() {
     // memastikan sudah di otentikasi
     mustAuthenticated();
 
     // menampilkan informasi kartu sesuai jenisnya
     final card = _cards[_cardIndex];
     if (card is ATM) {
-      print("Informasi Kartu");
-      print("-----------------------");
-      print("Jenis kartu           : ATM");
-      print("Nomor kartu           : ${card.cardNumber}");
-      print("Nomor Rekening        : ${card.accountNumber}");
-      print("Cabang bank           : ${card.bankBranch}");
-      print("Nama pemilik rekening : ${card.name}");
-      print("Sisal saldo           : ${card.balance}");
+      return ATMInfo(
+        accountNumber: card.accountNumber,
+        balance: card.balance,
+        cardNumber: card.cardNumber,
+        bankBranch: card.bankBranch,
+        name: card.name,
+      );
     } else if (card is EMoney) {
-      print("Informasi Kartu");
-      print("-----------------------");
-      print("Jenis kartu           : E-Money");
-      print("Nomor kartu           : ${card.cardNumber}");
-      print("Sisa Saldo            : ${card.balance}");
+      return EMoneyInfo(
+        cardNumber: card.cardNumber,
+        balance: card.balance,
+      );
     }
+    return null;
   }
 
   @override
