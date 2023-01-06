@@ -1,4 +1,4 @@
-import 'card.dart';
+import '../model/card.dart';
 
 List<Card> cards = [
   ATM(

@@ -1,8 +1,8 @@
-import 'card.dart';
-import 'card_information.dart';
-import 'exceptions.dart';
-import 'transaction.dart';
-import 'validator.dart';
+import '../model/card.dart';
+import '../model/card_information.dart';
+import '../exceptions.dart';
+import '../model/transaction.dart';
+import '../validator.dart';
 
 abstract class CardMachine {
   Type get insertedCardType;
@@ -48,9 +48,9 @@ class CardMachineImpl extends CardMachine {
   final List<Card> _cards;
 
   // list transaksi
-  List<Transaction> _transactions = [];
+  List<Transaction> _transactions;
 
-  CardMachineImpl({required List<Card> cards}) : _cards = cards;
+  CardMachineImpl({required List<Card> cards, required List<Transaction> transactions}) : _cards = cards, _transactions = transactions;
 
   void mustInsertCard() {
     if (_cardIndex < 0) {

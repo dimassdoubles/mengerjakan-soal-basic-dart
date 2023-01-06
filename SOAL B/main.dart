@@ -1,15 +1,16 @@
 import 'dart:io';
 
-import 'card.dart';
-import 'card_information.dart';
-import 'card_machine.dart';
-import 'cards.dart';
+import 'model/card.dart';
+import 'model/card_information.dart';
+import 'contoller/card_machine.dart';
+import 'data/cards.dart';
 import 'exceptions.dart';
-import 'transaction.dart';
+import 'model/transaction.dart';
+import 'data/transactions.dart';
 import 'validator.dart';
 
 void main() {
-  CardMachine cardMachine = CardMachineImpl(cards: cards);
+  CardMachine cardMachine = CardMachineImpl(cards: cards, transactions: transactions);
 
   while (true) {
     login(cardMachine);
