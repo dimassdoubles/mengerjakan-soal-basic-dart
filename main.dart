@@ -1,7 +1,6 @@
 import 'card_machine.dart';
 import 'cards.dart';
 import 'exceptions.dart';
-import 'transaction.dart';
 
 void main() {
   CardMachine cardMachine = CardMachineImpl(cards: cards);

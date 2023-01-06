@@ -2,10 +2,6 @@ import 'card.dart';
 import 'exceptions.dart';
 import 'transaction.dart';
 
-// TODO : validasi amount
-// TODO : validasi nomor kartu
-// TODO : validasi nomor rekening
-
 abstract class CardMachine {
   Type get loggedInCardType;
 

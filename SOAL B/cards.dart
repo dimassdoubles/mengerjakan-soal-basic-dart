@@ -15,7 +15,7 @@ List<Card> cards = [
     pin: "222222",
     name: "Abi",
     bankBranch: "Semarang",
-    balance: 100000,
+    balance: 100,
   ),
   ATM(
     cardNumber: "9371047517",
@@ -23,7 +23,7 @@ List<Card> cards = [
     pin: "256351",
     name: "Ozi",
     bankBranch: "Semarang",
-    balance: 5000,
+    balance: 100,
   ),
   ATM(
     cardNumber: "6109164644",
@@ -31,7 +31,7 @@ List<Card> cards = [
     pin: "143273",
     name: "Brian",
     bankBranch: "Semarang",
-    balance: 7600000,
+    balance: 100,
   ),
   ATM(
     cardNumber: "9803420422",
@@ -39,16 +39,16 @@ List<Card> cards = [
     pin: "109149",
     name: "Henik",
     bankBranch: "Semarang",
-    balance: 670000,
+    balance: 100,
   ),
   EMoney(
     cardNumber: "3333333333",
     pin: "333333",
-    balance: 500000,
+    balance: 100,
   ),
   EMoney(
     cardNumber: "1408822288",
     pin: "680071",
-    balance: 900000,
+    balance: 100,
   ),
 ];

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'card.dart';
+import 'card_information.dart';
 import 'card_machine.dart';
 import 'cards.dart';
 import 'exceptions.dart';
@@ -42,7 +43,7 @@ void transactionProcess(CardMachine cardMachine) {
           // menu informasi rekening
           case "A":
             {
-              cardMachine.seeCardInformation();
+              printCardInformation(cardMachine);
             }
             break;
 
@@ -110,7 +111,7 @@ void transactionProcess(CardMachine cardMachine) {
           // menu informasi rekening
           case "A":
             {
-              cardMachine.seeCardInformation();
+              printCardInformation(cardMachine);
             }
             break;
 
@@ -150,6 +151,26 @@ void transactionProcess(CardMachine cardMachine) {
     } on PinTidakValidException {
       print("Maaf, pin tidak valid");
     }
+  }
+}
+
+void printCardInformation(CardMachine cardMachine) {
+  CardInformation cardInfo = cardMachine.getCardInformation()!;
+  if (cardInfo is ATMInfo) {
+    print("Informasi Kartu");
+    print("-----------------------");
+    print("Jenis kartu           : ATM");
+    print("Nomor kartu           : ${cardInfo.cardNumber}");
+    print("Nomor Rekening        : ${cardInfo.accountNumber}");
+    print("Cabang bank           : ${cardInfo.bankBranch}");
+    print("Nama pemilik rekening : ${cardInfo.name}");
+    print("Sisal saldo           : ${cardInfo.balance}");
+  } else if (cardInfo is EMoneyInfo) {
+    print("Informasi Kartu");
+    print("-----------------------");
+    print("Jenis kartu           : E-Money");
+    print("Nomor kartu           : ${cardInfo.cardNumber}");
+    print("Sisa Saldo            : ${cardInfo.balance}");
   }
 }
 
@@ -277,7 +298,7 @@ void deposit(CardMachine cardMachine) {
   try {
     cardMachine.deposit(amount);
     print("\nTransaksi berhasil");
-    cardMachine.seeCardInformation();
+    printCardInformation(cardMachine);
   } on UnauthenticatedException {
     print(
       "\nBelum otentikasi",
@@ -294,10 +315,10 @@ void withDraw(CardMachine cardMachine) {
   try {
     cardMachine.withDraw(amount);
     print("\nTransaksi berhasil");
-    cardMachine.seeCardInformation();
+    printCardInformation(cardMachine);
   } on SaldoKurangException {
     print("\nMaaf, saldo anda tidak mencukupi");
-    cardMachine.seeCardInformation();
+    printCardInformation(cardMachine);
   }
 }
 
@@ -325,6 +346,13 @@ void login(
 
     // melakukan otentikasi
     autehenticate(cardMachine);
+  } 
+  // ketika masih ada kartu di dalam atm,
+  // kartu dikeluarkan, dan restart proses login
+  on MesinAtmSedangDigunakanException {
+    print("\nMasih ada kartu di dalam atm");
+    cardMachine.removeCard();
+    login(cardMachine);
   }
   // ketika kartu tidak terdaftar
   // mesin restart proses login
