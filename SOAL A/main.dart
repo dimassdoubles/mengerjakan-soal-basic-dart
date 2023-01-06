@@ -1,18 +1,15 @@
 import 'eceptions.dart';
-import 'tax_calculator.dart';
 import 'dart:io';
 
+import 'tax_calculator_factory.dart';
+
 void main() {
-  final taxCalculatorPpn10 = TaxCalculatorPpn10();
-  final taxCalculatorPpn11 = TaxCalculatorPpn11();
-  final taxCalculatorPpn10IncludeTax = TaxCalculatorPpn10IncludeTax();
-  final taxCalculatorPpn11IncludeTax = TaxCalculatorPpn11IncludeTax();
-  final taxCalculatorPph21 = TaxCalculatorPph21();
+
+  TaxCalculatorFactory calculatorFactory = TaxCalculatorFactory();
 
   while (true) {
     try {
-      calculateProcess(taxCalculatorPpn10IncludeTax, taxCalculatorPpn10,
-          taxCalculatorPpn11IncludeTax, taxCalculatorPpn11, taxCalculatorPph21);
+      calculateProcess(calculatorFactory);
     } on PilihanTidakValidException {
       print("\nMaaf, pilihan anda tidak valid");
     }
@@ -20,12 +17,7 @@ void main() {
   }
 }
 
-void calculateProcess(
-    TaxCalculatorPpn10IncludeTax taxCalculatorPpn10IncludeTax,
-    TaxCalculatorPpn10 taxCalculatorPpn10,
-    TaxCalculatorPpn11IncludeTax taxCalculatorPpn11IncludeTax,
-    TaxCalculatorPpn11 taxCalculatorPpn11,
-    TaxCalculatorPph21 taxCalculatorPph21) {
+void calculateProcess(TaxCalculatorFactory calculatorFactory) {
   String taxSelected = selectTaxType().toUpperCase();
   String amountType = "";
   bool ppnSelected = false;
@@ -75,7 +67,7 @@ void calculateProcess(
     case "AA":
       {
         print("Jenis Pajak  : PPN 10% / Harga Include Tax");
-        result = taxCalculatorPpn10IncludeTax.calculate(amount);
+        result = calculatorFactory.getCalculator(ppn10IncludeTax)!.calculate(amount);
       }
       break;
 
@@ -83,7 +75,7 @@ void calculateProcess(
     case "AB":
       {
         print("Jenis Pajak  : PPN 10% / Harga Exclude Tax");
-        result = taxCalculatorPpn10.calculate(amount);
+        result = calculatorFactory.getCalculator(ppn10)!.calculate(amount);
       }
       break;
 
@@ -91,7 +83,7 @@ void calculateProcess(
     case "BA":
       {
         print("Jenis Pajak  : PPN 11% / Harga Include Tax");
-        result = taxCalculatorPpn11IncludeTax.calculate(amount);
+        result = calculatorFactory.getCalculator(ppn11IncludeTax)!.calculate(amount);
       }
       break;
 
@@ -100,7 +92,7 @@ void calculateProcess(
       {
         {
           print("Jenis Pajak  : PPN 11% / Harga Exclude Tax");
-          result = taxCalculatorPpn11.calculate(amount);
+          result = calculatorFactory.getCalculator(ppn11)!.calculate(amount);
         }
       }
       break;
@@ -109,7 +101,7 @@ void calculateProcess(
     case "C":
       {
         print("Jenis Pajak  : PPH 21");
-        result = taxCalculatorPph21.calculate(amount);
+        result = calculatorFactory.getCalculator(pph21)!.calculate(amount);
       }
       break;
 
