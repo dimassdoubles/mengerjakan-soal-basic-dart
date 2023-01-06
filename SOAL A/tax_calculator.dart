@@ -10,7 +10,7 @@ class TaxCalculatorPpn10 implements TaxCalculator {
     if (amount < 0) {
       throw Exception();
     }
-    
+
     // % pajak
     double precentage = 0.10;
 
@@ -26,7 +26,7 @@ class TaxCalculatorPpn11 implements TaxCalculator {
     if (amount < 0) {
       throw Exception();
     }
-    
+
     // % pajak
     double precentage = 0.11;
 
@@ -111,7 +111,7 @@ class TaxCalculatorPph21 implements TaxCalculator {
   @override
   double calculate(double amount) {
     // amount tidak boleh negatif
-    if (amount < 0) {
+    if (amount < 1) {
       throw Exception();
     }
 
@@ -122,7 +122,7 @@ class TaxCalculatorPph21 implements TaxCalculator {
     late double precentage;
 
     if (amount < 40 * juta) {
-      precentage = 0.00;
+      return 0.0;
     } else if (amount < 50 * juta) {
       precentage = 0.05;
     } else if (amount < 250 * juta) {
