@@ -8,6 +8,7 @@ import '../exceptions.dart';
 
 void main() {
   late CardMachine cardMachine;
+  late List<Card> testCards;
 
   group("ATM", () {
     const cardNumber = "1111111111";
@@ -30,7 +31,60 @@ void main() {
     const emoneyPin = "333333";
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("getter insertedCardType", () {
       // given
@@ -45,7 +99,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("insertCard", () {
       // given / when
@@ -55,7 +162,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("authenticate", () {
       // given
@@ -67,7 +227,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("getCardInformation", () {
       // given
@@ -79,7 +292,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("removeCard", () {
       // given
@@ -97,7 +363,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("checkout", () {
       // given
@@ -113,7 +432,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("withdraw", () {
       // given
@@ -129,7 +501,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("deposit", () {
       // given
@@ -145,7 +570,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("transfer", () {
       // given
@@ -170,7 +648,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("topUpEmoney", () {
       // given
@@ -197,7 +728,60 @@ void main() {
     const pin = "333333";
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("getter insertedCardType", () {
       // given
@@ -212,7 +796,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("insertCard", () {
       // given / when
@@ -222,7 +859,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("authenticate", () {
       // given
@@ -234,7 +924,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("removeCard", () {
       // given
@@ -252,7 +995,60 @@ void main() {
     });
 
     setUp(() {
-      cardMachine = CardMachineImpl(cards: cards);
+      testCards = [
+        ATM(
+          cardNumber: "1111111111",
+          accountNumber: "0000000000",
+          pin: "111111",
+          name: "Dimas",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "2222222222",
+          accountNumber: "9999999999",
+          pin: "222222",
+          name: "Abi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9371047517",
+          accountNumber: "1379290461",
+          pin: "256351",
+          name: "Ozi",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "6109164644",
+          accountNumber: "0075772055",
+          pin: "143273",
+          name: "Brian",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        ATM(
+          cardNumber: "9803420422",
+          accountNumber: "4998144570",
+          pin: "109149",
+          name: "Henik",
+          bankBranch: "Semarang",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "3333333333",
+          pin: "333333",
+          balance: 100,
+        ),
+        EMoney(
+          cardNumber: "1408822288",
+          pin: "680071",
+          balance: 100,
+        ),
+      ];
+
+      cardMachine = CardMachineImpl(cards: testCards);
     });
     test("checkout", () {
       // given

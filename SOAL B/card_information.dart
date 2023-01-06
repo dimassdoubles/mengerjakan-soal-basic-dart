@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class CardInformation {
+class CardInformation extends Equatable {
   final String _cardNumber;
   final double _balance;
 
@@ -17,9 +17,12 @@ abstract class CardInformation {
   double get balance {
     return _balance;
   }
+
+  @override
+  List<Object?> get props => [_cardNumber, _balance];
 }
 
-class ATMInfo extends CardInformation implements Equatable{
+class ATMInfo extends CardInformation {
   final String _accountNumber, _bankBranch, _name;
   ATMInfo({
     required super.cardNumber,
@@ -42,21 +45,15 @@ class ATMInfo extends CardInformation implements Equatable{
   String get bankBranch {
     return _bankBranch;
   }
-  
+
   @override
-  List<Object?> get props => [super._balance, super._cardNumber, _accountNumber, _bankBranch, _name];
-  
-  @override
-  bool? get stringify => false;
+  List<Object?> get props =>
+      [_balance, _cardNumber, _accountNumber, _bankBranch, _name];
 }
 
-
-class EMoneyInfo extends CardInformation implements Equatable{  
+class EMoneyInfo extends CardInformation {
   EMoneyInfo({required super.cardNumber, required super.balance});
-  
+
   @override
-  List<Object?> get props => [super._balance, super._cardNumber];
-  
-  @override
-  bool? get stringify => false;
+  List<Object?> get props => [_balance, _cardNumber];
 }
