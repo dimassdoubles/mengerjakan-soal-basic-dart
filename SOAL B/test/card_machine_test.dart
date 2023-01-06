@@ -7,7 +7,7 @@ import '../cards.dart';
 import '../exceptions.dart';
 
 void main() {
-  CardMachine cardMachine = CardMachineImpl(cards: cards);
+  late CardMachine cardMachine;
 
   group("ATM", () {
     const cardNumber = "1111111111";
@@ -29,8 +29,9 @@ void main() {
     const emoneyCardNumber = "3333333333";
     const emoneyPin = "333333";
 
-    
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("getter insertedCardType", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -43,7 +44,9 @@ void main() {
       expect(cardType, ATM);
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("insertCard", () {
       // given / when
       cardMachine.insertCard(cardNumber);
@@ -51,7 +54,9 @@ void main() {
       //
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("authenticate", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -61,7 +66,9 @@ void main() {
       cardMachine.authenticate(pin);
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("getCardInformation", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -71,7 +78,9 @@ void main() {
       expect(cardMachine.getCardInformation()!, cardInfo);
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("removeCard", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -87,7 +96,9 @@ void main() {
           throwsA(isA<UnauthenticatedException>()));
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("checkout", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -101,7 +112,9 @@ void main() {
       expect(cardMachine.getCardInformation()!.balance, 90.0);
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("withdraw", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -115,7 +128,9 @@ void main() {
       expect(cardMachine.getCardInformation()!.balance, 90.0);
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("deposit", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -129,7 +144,9 @@ void main() {
       expect(cardMachine.getCardInformation()!.balance, 110.0);
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("transfer", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -152,7 +169,9 @@ void main() {
       expect(cardMachine.getCardInformation()!.balance, 110.0);
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("topUpEmoney", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -177,7 +196,9 @@ void main() {
     const cardNumber = "3333333333";
     const pin = "333333";
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("getter insertedCardType", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -190,7 +211,9 @@ void main() {
       expect(cardType, EMoney);
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("insertCard", () {
       // given / when
       cardMachine.insertCard(cardNumber);
@@ -198,7 +221,9 @@ void main() {
       //
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("authenticate", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -208,7 +233,9 @@ void main() {
       cardMachine.authenticate(pin);
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("removeCard", () {
       // given
       cardMachine.insertCard(cardNumber);
@@ -224,7 +251,9 @@ void main() {
           throwsA(isA<UnauthenticatedException>()));
     });
 
-    
+    setUp(() {
+      cardMachine = CardMachineImpl(cards: cards);
+    });
     test("checkout", () {
       // given
       cardMachine.insertCard(cardNumber);

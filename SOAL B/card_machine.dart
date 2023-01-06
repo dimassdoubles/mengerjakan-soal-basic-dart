@@ -377,7 +377,7 @@ class CardMachineImpl extends CardMachine {
     required double amount,
   }) {
     // memastikan nomor kartu valid
-    mustValidCardNumber(receiverAccountNumber);
+    mustValidAccountNumber(receiverAccountNumber);
 
     // memastikan nominal valid
     mustValidAmount(amount);

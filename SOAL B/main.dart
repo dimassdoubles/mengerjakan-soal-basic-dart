@@ -181,8 +181,13 @@ void authenticate(CardMachine cardMachine) {
     cardMachine.authenticate(pin);
   } on UnauthenticatedException {
     print("\nMaaf, pin yang anda masukkan salah");
+    authenticate(cardMachine);
   } on KartuBelumDimasukkanException {
     print("\nMaaf, anda harus memasukkan kartu terlebih dahulu");
+    login(cardMachine);
+  } on PinTidakValidException {
+    print("\nMaaf, pin tidak valid");
+    authenticate(cardMachine);
   }
 }
 
@@ -200,11 +205,9 @@ void checkout(CardMachine cardMachine) {
 }
 
 void transfer(CardMachine cardMachine) {
-  print("\nMasukan nomor rekening penerima:");
-  String receiverAccountNumber = stdin.readLineSync() ?? "";
+  String receiverAccountNumber = inputAccountNumber();
 
-  print("\nMasukan nominal transfer       :");
-  double amount = double.parse(stdin.readLineSync() ?? "");
+  double amount = inputAmount();
 
   try {
     cardMachine.transfer(
@@ -219,13 +222,25 @@ void transfer(CardMachine cardMachine) {
   } on TransaksiDilarangException {
     print("\nMaaf, kartu anda tidak bisa melakukan transaksi ini");
   } on SaldoKurangException {
-    print("\nMaaf, saldo anda kurang");
+    print("\nMaaf, saldo anda kurang\n");
+    printCardInformation(cardMachine);
   }
 }
 
+String inputAccountNumber() {
+  print("\nMasukan nomor rekening penerima:");
+  String receiverAccountNumber = stdin.readLineSync() ?? "";
+
+  // melakukan validasi nomor kartu
+  if (!isvalidNumber(receiverAccountNumber)) {
+    print("\nMaaf, nomor kartu tidak valid");
+    return inputAccountNumber();
+  }
+  return receiverAccountNumber;
+}
+
 void topUp(CardMachine cardMachine) {
-  print("\nMasukan nomor kartu E-money tujuan:");
-  String receiverCardNumber = stdin.readLineSync() ?? "";
+  String receiverCardNumber = inputCardNumber();
 
   // mengambil input nominal dari user
   double amount = inputAmount();
@@ -235,6 +250,7 @@ void topUp(CardMachine cardMachine) {
       receiverCardNumber: receiverCardNumber,
       amount: amount,
     );
+    print("\nTop Up berhasil");
   } on UnauthenticatedException {
     print(
       "\nBelum otentikasi",
@@ -250,6 +266,17 @@ void topUp(CardMachine cardMachine) {
   } on KartuTidakTerdaftarException {
     print("\nMaaf, nomor kartu tidak terdaftar");
   }
+}
+
+String inputCardNumber() {
+  print("\nMasukan nomor kartu E-money tujuan:");
+  String receiverCardNumber = stdin.readLineSync() ?? "";
+
+  if (!isvalidNumber(receiverCardNumber)) {
+    print("\nMaaf, nomor kartu tidak valid");
+    return inputCardNumber();
+  }
+  return receiverCardNumber;
 }
 
 void seeMutation(CardMachine cardMachine) {
@@ -346,7 +373,7 @@ void login(
 
     // melakukan otentikasi
     autehenticate(cardMachine);
-  } 
+  }
   // ketika masih ada kartu di dalam atm,
   // kartu dikeluarkan, dan restart proses login
   on MesinAtmSedangDigunakanException {
