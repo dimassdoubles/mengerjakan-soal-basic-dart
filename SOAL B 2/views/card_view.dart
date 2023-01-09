@@ -6,7 +6,7 @@ abstract class CardView {
   CardView({required Card card}) : _card = card;
 
   void printCardInformation() {
-    print("Informasi Kartu");
+    print("\nInformasi Kartu");
     print("-----------------------");
     print("Tipe Kartu            : ${_card.runtimeType}");
     print("Nomor kartu           : ${_card.cardNumber}");

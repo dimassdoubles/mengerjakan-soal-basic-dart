@@ -77,15 +77,15 @@ abstract class TransactionProcessor {
 
   void pickMenu() {
     _printMenu();
-    print("\nSilahkan pilih menu (urutan abjad):");
+    print("\n\nSilahkan pilih menu (urutan abjad):");
     try {
       String selectedMenu = stdin.readLineSync() ?? "";
       _runMenu(selectedMenu);
     } catch (e) {
-      print("Maaf, terjadi kesalahan");
+      print("\nMaaf, terjadi kesalahan");
     }
 
-    print("\nIngin melakukan transaksi lagi ? y/n:");
+    print("\n\nIngin melakukan transaksi lagi ? y/n:");
     String again = stdin.readLineSync() ?? "";
     if (again.toUpperCase() == "Y") {
       return pickMenu();
@@ -101,7 +101,7 @@ abstract class TransactionProcessor {
 
     int no = 1;
     for (int i = transactions.length - 1; i >= 0; i--) {
-      stdout.write("$no. ");
+      stdout.write("\n$no. ");
       _transactionViewFactory
           .getTransactionView(transactions[i])!
           .printTransactionDetails();
@@ -128,9 +128,9 @@ abstract class TransactionProcessor {
           balance: _card.balance,
         ),
       );
-      print("Pembayaran berhasil");
+      print("\nPembayaran berhasil");
     } else {
-      print("Maaf, saldo tidak cukup");
+      print("\nMaaf, saldo tidak cukup");
     }
   }
 }
@@ -171,7 +171,7 @@ class ATMProcessor extends TransactionProcessor {
     if (_cardsController.authenticateCard(_card.cardNumber, pin)) {
       super._checkout();
     } else {
-      print("Maaf, pin salah");
+      print("\nMaaf, pin salah");
     }
   }
 
@@ -186,17 +186,19 @@ class ATMProcessor extends TransactionProcessor {
       _cardControllerFactory
           .getCardController(_card)!
           .setBalance(balance - amount);
+
       _cardsController.updateCard(_card);
+
       _transactionsController.createTransaction(
         WithDrawTransaction(
           cardNumber: _card.cardNumber,
           amount: amount,
-          balance: _card.balance,
+          balance: balance - amount,
         ),
       );
-      print("Tarik tunai berhasil");
+      print("\nTarik tunai berhasil");
     } else {
-      print("Maaf, saldo tidak cukup");
+      print("\nMaaf, saldo tidak cukup");
     }
   }
 
@@ -217,28 +219,44 @@ class ATMProcessor extends TransactionProcessor {
       DepositTransaction(
         cardNumber: _card.cardNumber,
         amount: amount,
-        balance: _card.balance,
+        balance: balance + amount,
       ),
     );
-    print("Setor tunai berhasil");
+    print("\nSetor tunai berhasil");
   }
 
   void _transfer() {
-    String receiverAccountNumber = inputAccountNumber();
-
     try {
+      String receiverAccountNumber = inputAccountNumber();
       Card receiverCard =
           _cardsController.findByAccountNumber(receiverAccountNumber);
+
       double amount = inputAmount();
-      double balance =
+
+      double senderBalance =
           _cardControllerFactory.getCardController(_card)!.getBalance();
-      if (balance > amount) {
+
+      String senderAccountNumber = _cardControllerFactory
+          .getCardController(receiverCard)!
+          .getAccountNumber();
+
+      String senderName =
+          _cardControllerFactory.getCardController(_card)!.getName();
+
+      double receiverBalance =
+          _cardControllerFactory.getCardController(receiverCard)!.getBalance();
+
+      String receiverName =
+          _cardControllerFactory.getCardController(receiverCard)!.getName();
+
+
+      if (senderBalance > amount) {
         _cardControllerFactory
             .getCardController(_card)!
-            .setBalance(balance - amount);
+            .setBalance(senderBalance - amount);
         _cardControllerFactory
             .getCardController(receiverCard)!
-            .setBalance(receiverCard.balance + amount);
+            .setBalance(receiverBalance + amount);
 
         _cardsController.updateCard(_card);
         _cardsController.updateCard(receiverCard);
@@ -247,13 +265,9 @@ class ATMProcessor extends TransactionProcessor {
           SendTransaction(
             cardNumber: _card.cardNumber,
             amount: amount,
-            balance: balance - amount,
-            receiverAccountNumber: _cardControllerFactory
-                .getCardController(receiverCard)
-                .getAccountNumber(),
-            receiverName: _cardControllerFactory
-                .getCardController(receiverCard)
-                .getName(),
+            balance: senderBalance - amount,
+            receiverAccountNumber: receiverAccountNumber,
+            receiverName: receiverName,
           ),
         );
         _transactionsController.createTransaction(
@@ -261,36 +275,46 @@ class ATMProcessor extends TransactionProcessor {
             cardNumber: receiverCard.cardNumber,
             amount: amount,
             balance: receiverCard.balance + amount,
-            senderAccountNumber: _card.accountNumber,
-            senderName: _card.name,
+            senderAccountNumber: senderAccountNumber,
+            senderName: senderName,
           ),
         );
-        print("Transfer berhasil");
+        print("\nTransfer berhasil");
       } else {
-        print("Maaf, saldo anda tidak cukup");
+        print("\nMaaf, saldo anda tidak cukup");
       }
     } on KartuTidakTerdaftar {
-      print("Maaf, kartu nomor rekening tidak terdaftar");
+      print("\nMaaf, kartu nomor rekening tidak terdaftar");
     }
   }
 
   void _topUp() {
-    String receiverCardNumber = inputCardNumber();
     try {
+      String receiverCardNumber = inputCardNumber();
       Card emoneyCard = _cardsController.findByCardNumber(receiverCardNumber);
+
       double amount = inputAmount();
 
-      double balance =
+      double senderBalance =
           _cardControllerFactory.getCardController(_card)!.getBalance();
 
-      if (balance > amount) {
+      String senderName =
+          _cardControllerFactory.getCardController(_card)!.getName();
+
+      String senderAccountNumber =
+          _cardControllerFactory.getCardController(_card)!.getAccountNumber();
+
+      double receiverBalance =
+          _cardControllerFactory.getCardController(emoneyCard)!.getBalance();
+
+      if (senderBalance > amount) {
         _cardControllerFactory
             .getCardController(emoneyCard)!
-            .setBalance(emoneyCard.balance + amount);
+            .setBalance(receiverBalance + amount);
 
         _cardControllerFactory
             .getCardController(_card)!
-            .setBalance(balance - amount);
+            .setBalance(senderBalance - amount);
 
         _cardsController.updateCard(_card);
         _cardsController.updateCard(emoneyCard);
@@ -299,7 +323,7 @@ class ATMProcessor extends TransactionProcessor {
           TopUpTransaction(
             cardNumber: _card.cardNumber,
             amount: amount,
-            balance: balance - amount,
+            balance: senderBalance - amount,
             receiverCardNumber: receiverCardNumber,
           ),
         );
@@ -307,19 +331,20 @@ class ATMProcessor extends TransactionProcessor {
           ReceiveTransaction(
             cardNumber: receiverCardNumber,
             amount: amount,
-            balance: emoneyCard.balance - amount,
-            senderAccountNumber: _card.accountNumber,
-            senderName: _card.name,
+            balance: receiverBalance - amount,
+            senderAccountNumber: senderAccountNumber,
+            senderName: senderName,
           ),
         );
-        print("Top up berhasil");
+
+        print("\nTop up berhasil");
       } else {
-        print("Maaf, saldo anda tidak cukup");
+        print("\nMaaf, saldo anda tidak cukup");
       }
     } on MelebihiSaldoMaksimal {
-      print("Maaf, saldo melebihi batas maksimal, transaksi dibatalkan");
+      print("\nMaaf, saldo melebihi batas maksimal, transaksi dibatalkan");
     } on KartuTidakTerdaftar {
-      print("Maaf, kartu tidak terdaftar");
+      print("\nMaaf, kartu tidak terdaftar");
     }
   }
 }

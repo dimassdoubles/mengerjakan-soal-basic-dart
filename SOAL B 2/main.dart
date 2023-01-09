@@ -10,13 +10,13 @@ import 'transaction_processor_factory.dart';
 
 void main() {
   InputNumber inputCardNumber = InputNumber(
-    label: "Masukan nomor kartu:",
-    errorMessage: "Maaf, nomor kartu tidak valid",
+    label: "\nMasukan nomor kartu:",
+    errorMessage: "\nMaaf, nomor kartu tidak valid",
   );
 
   InputPin inputPin = InputPin(
-    label: "Masukan pin:",
-    errorMessage: "Maaf, pin tidak valid",
+    label: "\nMasukan pin:",
+    errorMessage: "\nMaaf, pin tidak valid",
   );
 
   CardsController cardsController = CardsControllerImpl(cards);
@@ -42,7 +42,7 @@ void main() {
         transactionProcessorFactory.getTransactionProcessor(card).pickMenu();
       }
     } on KartuTidakTerdaftar {
-      print("Maaf, kartu tidak terdaftar");
+      print("\nMaaf, kartu tidak terdaftar");
     }
   }
 }

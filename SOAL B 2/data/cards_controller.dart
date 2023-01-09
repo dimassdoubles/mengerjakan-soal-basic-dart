@@ -1,6 +1,5 @@
 import '../errors/exceptions.dart';
 import '../models/card.dart';
-import 'cards.dart';
 
 abstract class CardsController {
   Card findByCardNumber(String cardNumber);

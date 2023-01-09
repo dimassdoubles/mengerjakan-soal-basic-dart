@@ -22,11 +22,11 @@ class InputPin {
   }
 }
 
-void main() {
-  InputPin inputPin = InputPin(
-    label: "Masukan pin",
-    errorMessage: "Maaf, pin tidak valid",
-  );
+// void main() {
+//   InputPin inputPin = InputPin(
+//     label: "Masukan pin",
+//     errorMessage: "Maaf, pin tidak valid",
+//   );
 
-  inputPin();
-}
+//   inputPin();
+// }
